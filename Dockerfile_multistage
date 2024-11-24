@@ -1,0 +1,30 @@
+# Stage 1: Build stage
+FROM python:3.9-slim as builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy the requirements file and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt --target=/app/dependencies
+
+# Copy the application source code
+COPY . .
+
+# Stage 2: Final stage
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy only the dependencies from the builder stage
+COPY --from=builder /app/dependencies /usr/local/lib/python3.9/site-packages/
+
+# Copy the application code
+COPY . .
+
+# Expose the application port
+EXPOSE 5000
+
+# Command to run the application
+CMD ["python", "app.py"]
