@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-     return "<h1 style='color:orange'>Welcome to Java Home Docker App </h1>"
+     return "<h1 style='color:Green'>Welcome to Docker App</h1>"
 
 
 if __name__ == '__main__':
